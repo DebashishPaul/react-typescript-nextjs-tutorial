@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 
 interface props{
     task: string,
@@ -7,10 +7,14 @@ interface props{
 }
 
 const InputField : React.FC <props> = ({task, setTask, handleAdd}) => {
+  const inputRef = useRef<HTMLInputElement>(null)
   return (
     <div>
-      <form onSubmit={handleAdd}>
-        <input value={task} onChange={(e) => setTask(e.target.value)} type="text" placeholder="write your task" />
+      <form onSubmit={
+        (e) => {handleAdd(e)
+          inputRef.current?.focus()
+        }}>
+        <input value={task} ref={inputRef} onChange={(e) => setTask(e.target.value)} type="text" placeholder="write your task" />
         <button>Go</button>
       </form>
     </div>
